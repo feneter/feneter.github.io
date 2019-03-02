@@ -43,30 +43,6 @@
 
 	
 	</style>
-	<script>
-		let goodluckprofile = {}; 
-		fetch('https://api.github.com/users/HallaSepetu') //visit this URL
-			.then(response => response.json()) //transform the response into json
-			.then(data => {
-				profile = document.getElementById('github-profile'); //get the paragraph element
-				login = document.createElement('span');  //create a new span element to put the github id
-				login.setAttribute('style', 'color: red; font-weight: bold; display: block');
-				loginText = document.createTextNode(`Github ID: ${data.login}`); //create the github id
-				login.appendChild(loginText); //append or add the text to the span element
-				profile.appendChild(login); //append or add the span element to the paragragh
-				joined = document.createElement('span'); //create span element to put date
-				date = document.createTextNode(`Joined: ${data.created_at}`); // create date element
-				joined.appendChild(date); // append date to span
-				profile.appendChild(joined); //append span to profile paragraph
-			}); //return the transformed response
-		fetch('https://api.github.com/users/sovello')
-			.then(response => response.json())
-			.then(data => {
-				mugshot = document.getElementById('sovello-mugshot');
-				mugshot.setAttribute('src', data.avatar_url);
-			});
-		
-	</script>
         <title>Feneter Web Page</title>
     </head>
     <body>
@@ -120,7 +96,44 @@
 		 mobile;<a href="tell:+15153464658">CALL NOW</a>						
 		 email;	<a href="mailto:noreply@github.com">@sovello</a>								
 	</pre>	
- </footer 
-		 >
+ </footer>
+
+ <script>
+	 /**
+	 We need to keep this script at the end fo the page because it manipulates the DOM. We want to be sure all the DOM is loaded and all the elements are available
+	 before we can start manipulating them
+	 */
+		let goodluckprofile = {}; 
+		fetch('https://api.github.com/users/HallaSepetu') //visit this URL
+			.then(response => response.json()) //transform the response into json
+			.then(data => {
+				const profile = document.getElementById('github-profile'); //get the paragraph element
+				const login = document.createElement('span');  //create a new span element to put the github id
+				login.setAttribute('style', 'color: red; font-weight: bold; display: block');
+				loginText = document.createTextNode(`Github ID: ${data.login}`); //create the github id
+				login.appendChild(loginText); //append or add the text to the span element
+				profile.appendChild(login); //append or add the span element to the paragragh
+				const joined = document.createElement('span'); //create span element to put date
+				const date = document.createTextNode(`Joined: ${data.created_at}`); // create date element
+				joined.appendChild(date); // append date to span
+				profile.appendChild(joined); //append span to profile paragraph
+			}); //return the transformed response
+
+			//get sovello avatar from github
+		fetch('https://api.github.com/users/sovello')
+			.then(response => response.json())
+			.then(data => {
+				const mugshot = document.getElementById('sovello-mugshot');
+				mugshot.setAttribute('src', data.avatar_url);
+			});
+		//display a ticking clock  
+		//the clock will live in <h1>
+		const h1 = document.createElement('h1');
+		let div = document.getElementsByTagName('div')[0]; //returns the first div from this page. which is where we want the clock to display
+		div.prepend(h1);
+		setInterval(function(){ //setInterval function runs at a specified time interval. it will rewrite every 1 second so the clock is seen as ticking 
+			h1.innerHTML = new Date(); //create a new date everytime and sets to the value for the H1
+		}, 1000); //1000 is time in milliseconds. 1000ms == 1sec. the clock will change every one second
+	</script>
     </body>
 </html>
