@@ -40,8 +40,33 @@
 			background-color;blue;
 			display:block;
 		}
+
 	
 	</style>
+	<script>
+		let goodluckprofile = {}; 
+		fetch('https://api.github.com/users/HallaSepetu') //visit this URL
+			.then(response => response.json()) //transform the response into json
+			.then(data => {
+				profile = document.getElementById('github-profile'); //get the paragraph element
+				login = document.createElement('span');  //create a new span element to put the github id
+				login.setAttribute('style', 'color: red; font-weight: bold; display: block');
+				loginText = document.createTextNode(`Github ID: ${data.login}`); //create the github id
+				login.appendChild(loginText); //append or add the text to the span element
+				profile.appendChild(login); //append or add the span element to the paragragh
+				joined = document.createElement('span'); //create span element to put date
+				date = document.createTextNode(`Joined: ${data.created_at}`); // create date element
+				joined.appendChild(date); // append date to span
+				profile.appendChild(joined); //append span to profile paragraph
+			}); //return the transformed response
+		fetch('https://api.github.com/users/sovello')
+			.then(response => response.json())
+			.then(data => {
+				mugshot = document.getElementById('sovello-mugshot');
+				mugshot.setAttribute('src', data.avatar_url);
+			});
+		
+	</script>
         <title>Feneter Web Page</title>
     </head>
     <body>
@@ -59,7 +84,7 @@
             
             <ul>
                 <li style="list-style-type:none">
-                    <img src="sovello.png" alt="Sovello faceshot" /><br/><b>Sovello Hildebrand,</b>
+                    <img id="sovello-mugshot" /><br/><b>Sovello Hildebrand,</b>
 					<div class="w3-panel w3-pale-green">
                     <p style="align:right">Do everything <style color="red">(legit)</style> you can to get what you want.
                     Challenges should be your motivation. Always compare yourself to your
@@ -76,6 +101,7 @@
                 </li>
 				<div class="w3-pale w3-pale-blue">
                 <li>Goodluck Halla
+					<p id="github-profile"></p>
                     <p style="font-family: 'Montserrat', sans-serif;">I used to ask myself at my early age to why people especially my uncles, asking myself to why they are not having jobs?
                         Then I got an answer after reaching my 20's. I have gotten the right answer,
                         that age does'nt matter in getting money instead everything you plan and do. Then I came across this website
